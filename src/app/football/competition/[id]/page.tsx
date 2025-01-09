@@ -8,11 +8,11 @@ import Standings from "@/app/components/football/standings";
 import TopScorers from "@/app/components/football/topScorers";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 
-export default async function Competition({
-  params,
-}: {
-  params: { id: number };
-}) {
+type ParamProps = {
+  id: number;
+};
+
+export default async function Competition({ params }: { params: ParamProps }) {
   const matches = await fetchMatches(params.id);
   const standings = await fetchStandings(params.id);
   const topScorers = await fetchTopScorers(params.id);
