@@ -3,12 +3,15 @@ import AiPrediction from "@/app/components/football/aiPrediction";
 import HeadToHead from "@/app/components/football/headToHead";
 import Image from "next/image";
 
-type ParamProps = {
-  id: string;
-};
+interface ParamProps {
+  params: Promise<{
+    id: string;
+  }>;
+}
 
-export default async function DetailMatch({ params }: { params: ParamProps }) {
-  const matchDetail = await fetchMatchDetail(parseInt(params.id));
+export default async function DetailMatch({ params }: ParamProps) {
+  const awaitedParams = await params;
+  const matchDetail = await fetchMatchDetail(parseInt(awaitedParams.id));
   return (
     <>
       <div className="flex justify-between items-center space-x-6 p-6 pb-0">
@@ -35,7 +38,7 @@ export default async function DetailMatch({ params }: { params: ParamProps }) {
           </p>
         </div>
       </div>
-      <HeadToHead matchId={parseInt(params.id)} />
+      <HeadToHead matchId={parseInt(awaitedParams.id)} />
       <div className="text-center mt-2">
         <AiPrediction
           homeTeam={matchDetail.data.homeTeam.shortName}
